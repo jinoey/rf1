@@ -1,0 +1,373 @@
+/* =========================================================
+   락페에서 살아남기 — 스타일
+   스테이지는 피그마 프레임과 같은 1728 × 1117 기준으로 그리고,
+   화면 크기에 맞게 통째로 확대/축소합니다 (script.js 참고).
+   ========================================================= */
+
+:root {
+  --pink: #ff00c8;
+  --pink-light: #ffd1f4;
+  --lime: #c3ff2e;
+  --black: #111;
+  --white: #fff;
+  --title-font: "agahnsangsoo2012", sans-serif;
+  --body-font: "agahnsangsoo2012", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0d0d0d;
+  font-family: var(--body-font);
+  color: var(--black);
+}
+
+button {
+  font: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+#viewport {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#stage {
+  position: relative;
+  width: 1728px;
+  height: 1117px;
+  flex: none;
+  overflow: hidden;
+  transform-origin: center center;
+  border: 14px solid var(--lime);
+}
+
+/* ---------- 페이지 공통 ---------- */
+.page {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.03);
+  transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s;
+}
+.page.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: opacity .5s ease, transform .5s ease, visibility 0s;
+}
+.bg-plain { background-image: url("img/bg.jpg"); }
+.bg-crowd { background-image: url("img/bg_crowd.jpg"); }
+
+.page > * { position: absolute; }
+
+/* ---------- 만화풍 뾰족 테두리(burst) ----------
+   clip-path 좌표는 script.js 에서 자동으로 만들어 넣습니다 */
+.burst { background: var(--lime); }
+.burst-inner {
+  position: absolute;
+  inset: 22px;
+  background: var(--white);
+}
+.char { pointer-events: none; user-select: none; }
+
+/* =========================================================
+   1페이지
+   ========================================================= */
+.burst-p1 { left: 30px; top: 18px; width: 860px; height: 1240px; }
+.char1    { left: 175px; top: 40px; width: 640px; }
+
+.title {
+  left: 870px;
+  top: 140px;
+  width: 800px;
+  font-family: var(--title-font);
+  font-weight: 400;
+  font-size: 132px;
+  line-height: 1;
+}
+.title-line { display: flex; position: relative; }
+.title-line.line2 { margin-left: 180px; margin-top: 4px; }
+
+/* 한 글자씩 — 잔잔한 파도처럼 위아래로 흔들림 */
+.wave-char {
+  display: inline-block;
+  padding: 8px 6px 2px;
+  margin-right: -6px;
+  background: var(--pink);
+  color: var(--black);
+  animation: wave 2.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.22s);
+  will-change: transform;
+}
+.wave-char:nth-child(odd)  { --tilt: -3deg; }
+.wave-char:nth-child(even) { --tilt:  2deg; }
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0)     rotate(var(--tilt)); }
+  50%      { transform: translateY(-16px) rotate(calc(var(--tilt) * -1)); }
+}
+
+.subtitle {
+  left: 872px;
+  top: 466px;
+  padding: 2px 12px;
+  background: var(--lime);
+  font-family: var(--body-font);
+  font-weight: 400;
+  font-size: 42px;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   🤘 + 알약 모양 버튼 (1·2·3페이지 공통)
+   ========================================================= */
+.hand-btn {
+  position: absolute;
+  width: 560px;
+  height: 260px;
+  transform: rotate(-11deg);
+}
+.hand-btn .hand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 190px;
+  height: 230px;
+  fill: var(--pink);
+  z-index: 2;
+}
+.hand-btn .pill {
+  position: absolute;
+  left: 140px;
+  top: 92px;
+  width: 400px;
+  height: 120px;
+  border-radius: 999px;
+  background: var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--title-font);
+  font-size: 54px;
+  letter-spacing: 2px;
+  color: var(--black);
+  overflow: hidden;
+}
+.hand-btn .pill-light { color: var(--pink-light); }
+
+.hand-btn:hover .pill,
+.hand-btn:focus-visible .pill { filter: brightness(1.08); }
+.hand-btn:active { transform: rotate(-11deg) scale(.96); }
+.hand-btn:focus-visible { outline: none; }
+
+/* --- 반짝임 + 후광 (1, 3페이지 '게임 시작') --- */
+.shine-btn { animation: halo 1.6s ease-in-out infinite; }
+@keyframes halo {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, .9))
+            drop-shadow(0 0 14px rgba(255, 0, 200, .55));
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 1))
+            drop-shadow(0 0 40px rgba(255, 0, 200, .95))
+            drop-shadow(0 0 70px rgba(195, 255, 46, .7));
+  }
+}
+/* 알약 위를 지나가는 빛줄기 */
+.shine-btn .pill::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -60%;
+  width: 40%;
+  height: 140%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .85), transparent);
+  transform: skewX(-20deg);
+  animation: sweep 2.4s ease-in-out infinite;
+}
+@keyframes sweep {
+  0%   { left: -60%; }
+  55%  { left: 130%; }
+  100% { left: 130%; }
+}
+/* 주변에서 깜빡이는 별 */
+.sparkle {
+  position: absolute;
+  font-style: normal;
+  color: var(--white);
+  text-shadow: 0 0 8px var(--white), 0 0 18px var(--pink);
+  animation: twinkle 1.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.sparkle.s1 { left: 520px; top: 50px;  font-size: 46px; }
+.sparkle.s2 { left: 560px; top: 200px; font-size: 30px; animation-delay: .5s; }
+.sparkle.s3 { left: 200px; top: 210px; font-size: 34px; animation-delay: 1s; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0;  transform: scale(.4) rotate(0deg); }
+  50%      { opacity: 1;  transform: scale(1.1) rotate(45deg); }
+}
+
+.p1-start { left: 1110px; top: 760px; }
+
+/* --- 둥실둥실 (2페이지 '그래!') --- */
+.float-btn { animation: floaty 2.2s ease-in-out infinite; }
+@keyframes floaty {
+  0%, 100% { transform: rotate(-11deg) translateY(0); }
+  50%      { transform: rotate(-9deg)  translateY(-18px); }
+}
+
+/* =========================================================
+   대화창 (2·3·4페이지)
+   ========================================================= */
+.dialog {
+  background: var(--lime);
+  border: 9px solid var(--pink);
+  border-radius: 30px;
+}
+.dialog-lg { left: 58px; top: 703px; width: 1612px; height: 356px; padding: 46px 70px; cursor: pointer; }
+.dialog p, .typing {
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.65;
+  letter-spacing: -0.3px;
+  white-space: pre-line;
+}
+.typing::after {
+  content: "▌";
+  margin-left: 4px;
+  animation: blink .8s steps(1) infinite;
+}
+.typing.done::after { content: ""; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* 2·3페이지 캐릭터 */
+.burst-p2 { left: 610px; top: -10px; width: 590px; height: 730px; }
+.char2    { left: 690px; top: 70px;  width: 450px; }
+.burst-p3 { left: 505px; top: -10px; width: 725px; height: 730px; }
+.char3    { left: 560px; top: 90px;  width: 610px; }
+
+.p2-yes, .p3-start { left: 1125px; top: 790px; }
+
+/* 타이핑이 끝난 뒤 버튼 등장 */
+.after-typing { opacity: 0; pointer-events: none; transition: opacity .4s ease; }
+.after-typing.show { opacity: 1; pointer-events: auto; }
+
+/* =========================================================
+   4페이지 — 가방 고르기
+   ========================================================= */
+.bag-card {
+  background: var(--white);
+  border: 14px solid var(--lime);
+  border-radius: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px;
+  animation: floaty-bag 3s ease-in-out infinite;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.bag-card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform .25s ease;
+  pointer-events: none;
+}
+.bag-card:hover,
+.bag-card:focus-visible {
+  outline: none;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 6px var(--white), 0 0 40px rgba(255, 0, 200, .8);
+}
+.bag-card:hover img { transform: scale(1.08) rotate(-3deg); }
+
+.bag-black { left: 175px;  top: 40px;  width: 380px; height: 495px; animation-delay: 0s; }
+.bag-sky   { left: 675px;  top: 362px; width: 372px; height: 490px; animation-delay: -1s; }
+.bag-beige { left: 1128px; top: 100px; width: 445px; height: 398px; animation-delay: -2s; }
+
+@keyframes floaty-bag {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -22px; }
+}
+
+.dialog-bar { left: 43px; top: 872px; width: 1642px; height: 200px; display: flex; align-items: center; padding: 0 86px; }
+.dialog-bar p { font-size: 36px; }
+
+.burst-p4 { left: 1250px; top: 520px; width: 440px; height: 560px; background: var(--pink); }
+.burst-p4 .burst-inner { background: var(--lime); inset: 20px; }
+.char4    { left: 1318px; top: 600px; width: 330px; }
+
+/* =========================================================
+   5·6·7페이지 — 결과
+   ========================================================= */
+.result-box {
+  left: 36px;
+  top: 230px;
+  width: 1656px;
+  height: 652px;
+  background: var(--pink);
+  border: 16px solid var(--lime);
+  border-radius: 46px;
+}
+.result-box > * { position: absolute; }
+.result-bag {
+  left: 170px;
+  top: 90px;
+  height: 420px;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .25));
+}
+.result-bag.bag-beige-img { height: 300px; top: 150px; left: 150px; }
+.result-text {
+  left: 660px;
+  top: 90px;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+}
+.rock-photo { left: 1272px; top: 556px; width: 418px; pointer-events: none; }
+
+/* 결과 페이지 등장 모션 */
+.result.is-active .result-bag  { animation: pop-in .6s cubic-bezier(.2, 1.4, .4, 1) both; }
+.result.is-active .result-text { animation: rise-in .6s ease .15s both; }
+.result.is-active .retry-btn   { animation: rise-in .6s ease .35s both; }
+@keyframes pop-in  { from { transform: scale(.6) rotate(-8deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes rise-in { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* 가방 다시 선택하기 버튼 */
+.retry-btn {
+  left: 660px;
+  top: 470px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 40px;
+  border-radius: 999px;
+  background: var(--lime);
+  border: 5px solid var(--black);
+  box-shadow: 6px 6px 0 var(--black);
+  font-family: var(--title-font);
+  font-size: 38px;
+  letter-spacing: 1px;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.retry-icon { font-family: var(--body-font); font-weight: 400; font-size: 40px; line-height: 1; display: inline-block; transition: transform .4s ease; }
+.retry-btn:hover,
+.retry-btn:focus-visible { outline: none; background: var(--white); transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--black); }
+.retry-btn:hover .retry-icon { transform: rotate(-360deg); }
+.retry-btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--black); }
