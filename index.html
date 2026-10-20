@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>락페에서 살아남기</title>
+<!-- Adobe Fonts: 안상수체 (kit uch8suv) -->
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'uch8suv',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 손 모양(🤘) 아이콘: 버튼마다 재사용 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="rock-hand" viewBox="0 0 200 230">
+      <path d="M58 228 L52 150 L18 30 Q16 14 32 10 Q46 8 50 22 L84 118 L92 104 Q100 94 110 102 L116 110 L124 98 Q133 90 141 100 L146 30 Q148 14 164 14 Q180 16 178 32 L170 150 Q168 178 150 192 L146 228 Z
+               M52 150 L20 128 Q8 120 14 108 Q22 98 34 104 L60 122 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="viewport">
+  <div id="stage">
+
+    <!-- ========== 1. 타이틀 ========== -->
+    <section class="page bg-plain is-active" id="p1">
+      <div class="burst burst-p1"><div class="burst-inner"></div></div>
+      <img class="char char1" src="img/char1.png" alt="락둥이">
+
+      <h1 class="title" aria-label="락페에서 살아남기">
+        <span class="title-line line1" data-text="락페에서"></span>
+        <span class="title-line line2" data-text="살아남기"></span>
+      </h1>
+      <p class="subtitle">How to Survive at a Rock Festival</p>
+
+      <button class="hand-btn shine-btn p1-start" data-go="p2">
+        <svg class="hand"><use href="#rock-hand"/></svg>
+        <span class="pill">게임 시작</span>
+        <i class="sparkle s1">✦</i><i class="sparkle s2">✦</i><i class="sparkle s3">✦</i>
+      </button>
+    </section>
+
+    <!-- ========== 2. 인사 ========== -->
+    <section class="page bg-crowd" id="p2">
+      <div class="burst burst-p2"><div class="burst-inner"></div></div>
+      <img class="char char2" src="img/char2.png" alt="손 흔드는 락둥이">
+
+      <div class="dialog dialog-lg">
+        <p class="typing" data-lines='["안녕 나는 락둥이야","내가 처음으로 락 페스티벌에 가게 되었는데","어떤 걸 챙겨야 할지 모르겠어 . . .","","나를 도와줄래?"]'></p>
+      </div>
+
+      <button class="hand-btn float-btn after-typing p2-yes" data-go="p3">
+        <svg class="hand"><use href="#rock-hand"/></svg>
+        <span class="pill pill-light">그래!</span>
+      </button>
+    </section>
+
+    <!-- ========== 3. 게임 방법 ========== -->
+    <section class="page bg-crowd" id="p3">
+      <div class="burst burst-p3"><div class="burst-inner"></div></div>
+      <img class="char char3" src="img/char3.png" alt="가리키는 락둥이">
+
+      <div class="dialog dialog-lg">
+        <p class="typing" data-lines='["시간 안에 하늘에서 떨어지는 아이템들을 가방에 담아야 해!","손가락을 움직여서 가방을 요리조리 움직여 줘."]'></p>
+      </div>
+
+      <button class="hand-btn shine-btn after-typing p3-start" data-go="p4">
+        <svg class="hand"><use href="#rock-hand"/></svg>
+        <span class="pill pill-light">게임 시작</span>
+        <i class="sparkle s1">✦</i><i class="sparkle s2">✦</i><i class="sparkle s3">✦</i>
+      </button>
+    </section>
+
+    <!-- ========== 4. 가방 고르기 ========== -->
+    <section class="page bg-plain" id="p4">
+      <button class="bag-card bag-black" data-go="p6" aria-label="검정색 가방">
+        <img src="img/bag_black.png" alt="">
+      </button>
+      <button class="bag-card bag-sky" data-go="p5" aria-label="하늘색 가방">
+        <img src="img/bag_sky.png" alt="">
+      </button>
+      <button class="bag-card bag-beige" data-go="p7" aria-label="베이지색 가방">
+        <img src="img/bag_beige.png" alt="">
+      </button>
+
+      <div class="dialog dialog-bar"><p>가방을 골라줘 !</p></div>
+
+      <div class="burst burst-p4"><div class="burst-inner"></div></div>
+      <img class="char char4" src="img/char4.png" alt="부탁하는 락둥이">
+    </section>
+
+    <!-- ========== 5. 하늘색 가방 (정답) ========== -->
+    <section class="page bg-plain result" id="p5">
+      <div class="result-box">
+        <img class="result-bag" src="img/bag_sky.png" alt="하늘색 가방">
+        <p class="result-text">겉에 주머니도 많고 방수 재질이라<br>짐도 많이 들어가고 비가 와도 젖지 않겠네!<br><br>이 가방이 딱이야~!</p>
+      </div>
+      <img class="rock-photo" src="img/rock.png" alt="">
+    </section>
+
+    <!-- ========== 6. 검정색 가방 ========== -->
+    <section class="page bg-plain result" id="p6">
+      <div class="result-box">
+        <img class="result-bag" src="img/bag_black.png" alt="검정색 가방">
+        <p class="result-text">이 가방은 비가 오면 다 젖을 거 같은데?<br>주머니도 많이 없어 보이고...<br><br>다른 가방을 골라줄래?</p>
+        <button class="retry-btn" data-go="p4"><span class="retry-icon">↺</span> 가방 다시 선택하기</button>
+      </div>
+      <img class="rock-photo" src="img/rock.png" alt="">
+    </section>
+
+    <!-- ========== 7. 베이지색 가방 ========== -->
+    <section class="page bg-plain result" id="p7">
+      <div class="result-box">
+        <img class="result-bag bag-beige-img" src="img/bag_beige.png" alt="베이지색 가방">
+        <p class="result-text">이 가방은 어깨에 멜 수도 없고<br>크기가 너무 작아서 준비물을 넣기엔<br>부족할 것 같아...<br><br>다른 가방을 골라줄래?</p>
+        <button class="retry-btn" data-go="p4"><span class="retry-icon">↺</span> 가방 다시 선택하기</button>
+      </div>
+      <img class="rock-photo" src="img/rock.png" alt="">
+    </section>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
